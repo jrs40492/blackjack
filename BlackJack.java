@@ -3,30 +3,26 @@
  *  5/13/12
  *  BlackJack program
  */
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-import java.awt.Color;
 
-import javax.print.DocFlavor.STRING;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class BlackJack extends JPanel {
 	private static final long serialVersionUID = 1;
 	Game game = new Game();
+	Deck deck = new Deck();
 	Card card;
 
 	private JButton hit, stay, newGame;
 
 	public BlackJack() {
-		game.newGame();
+		deck.build();
+		game.newGame(deck);
 
 		ButtonListener listener = new ButtonListener();
 		hit = new JButton("Hit");
@@ -48,10 +44,11 @@ public class BlackJack extends JPanel {
 	public void paintComponent(Graphics pen) {
 		super.paintComponents(pen);
 
+		setBackground(Color.decode("#277714"));
+
 		pen.setFont(new Font("Arial", Font.BOLD, 20));
 
 		game.dealer.hand.drawHand("Dealer", pen);
-
 		game.player.hand.drawHand("Player", pen);
 
 		String message = game.checkScores(pen);
@@ -59,8 +56,9 @@ public class BlackJack extends JPanel {
 		if (message != null) {
 			game.player.setAllowHit(false);
 			game.player.setAllowStay(false);
-			
+
 			pen.setColor(Color.black);
+			pen.setFont(new Font("Arial", Font.BOLD, 40));
 			pen.drawString(message, 300, 215);
 		}
 
@@ -73,14 +71,14 @@ public class BlackJack extends JPanel {
 			String Click = buttonClick.getActionCommand();
 
 			if (Click.equals("hit")) {
-				game.player.hand.addCard(game.deck);
+				game.player.hand.addCard(deck);
 			} else if (Click.equals("stay")) {
-				game.dealer.showHand(game.deck);
+				game.dealer.showHand(deck);
 				game.isOver = true;
 			} else if (Click.equals("newGame")) {
-				game.newGame();
+				game.newGame(deck);
 			}
-			
+
 			repaint();
 		}
 	}

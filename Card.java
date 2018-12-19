@@ -1,5 +1,3 @@
-import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Color;
 
 public class Card {
@@ -17,22 +15,22 @@ public class Card {
 
     switch (suit) {
     case "Hearts":
-      this.display = "H";
+      this.display = "\u2665";
       this.color = Color.red;
       break;
 
     case "Diamonds":
-      this.display = "D";
+      this.display = "\u2666";
       this.color = Color.red;
       break;
 
     case "Clubs":
-      this.display = "C";
+      this.display = "\u2663";
       this.color = Color.black;
       break;
 
     case "Spades":
-      this.display = "S";
+      this.display = "\u2660";
       this.color = Color.black;
       break;
 

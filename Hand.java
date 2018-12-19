@@ -7,14 +7,6 @@ public class Hand {
   public int total = 0;
   private Card card;
 
-  // Vars for drawing cards
-  private static final int cardWidth = 150;
-  private static final int cardHeight = 175;
-  private int xStart = 10;
-  private int yDealer = 20;
-  private int yPlayer = 220;
-  private int cardXSpacing = 165;
-
   public void addCard(Deck deck) {
     card = deck.nextCard();
     addTotal(card);
@@ -37,23 +29,30 @@ public class Hand {
   }
 
   public void drawHand(String type, Graphics pen) {
+    final int cardWidth = 150;
+    final int cardHeight = 175;
+    final int cardXSpacing = 165;
+    final int yDealer = 30;
+    final int yPlayer = 210 + yDealer;
+    final int xStart = 10;
+
     int offsetX = 0;
     int offsetY = 0;
     int index = 0;
-    pen.setColor(Color.black);
+    pen.setColor(Color.white);
 
     switch (type) {
     case "Dealer":
       offsetY = yDealer;
       String dealerText = "Dealer Total: " + this.total;
-      pen.drawString(dealerText, 5, 15);
+      pen.drawString(dealerText, xStart, yDealer - 5);
       break;
 
     case "Player":
       offsetX = (cardXSpacing * index) + xStart;
       offsetY = yPlayer;
       String playerText = "Player Total: " + this.total;
-      pen.drawString(playerText, 5, 215);
+      pen.drawString(playerText, xStart, yPlayer - 5);
       break;
 
     default:
@@ -64,9 +63,13 @@ public class Hand {
       offsetX = (cardXSpacing * index) + xStart;
       index++;
 
-      pen.setColor(card.color);
-
+      pen.setColor(Color.black);
       pen.drawRoundRect(offsetX, offsetY, cardWidth, cardHeight, 10, 10);
+
+      pen.setColor(Color.WHITE);
+      pen.fillRoundRect(offsetX, offsetY, cardWidth, cardHeight, 10, 10);
+
+      pen.setColor(card.color);
 
       // Check if card should show
       if (!card.visible) {

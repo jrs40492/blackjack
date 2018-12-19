@@ -3,30 +3,27 @@ import java.awt.Graphics;
 public class Game {
   public Dealer dealer;
   public Player player;
-  public Deck deck;
   public boolean isOver;
 
-  public void newGame() {
+  public void newGame(Deck deck) {
     this.dealer = new Dealer();
     this.player = new Player();
     this.isOver = false;
 
-    this.deck = new Deck();
-    deck.buildDeck();
+    deck.shuffle();
 
     player.hand.addCard(deck);
     dealer.hand.addCard(deck);
 
     player.hand.addCard(deck);
-		dealer.hand.addCard(deck, false);
-		
+    dealer.hand.addCard(deck, false);
   }
 
   public String checkScores(Graphics pen) {
     if (player.hand.total > 21) {
       return "You busted!!";
     }
-    
+
     if (player.hand.total == 21) {
       return "BlackJack!!";
     }
