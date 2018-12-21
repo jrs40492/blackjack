@@ -1,5 +1,7 @@
 public class Player {
   Hand hand = new Hand();
+
+  public String type = "Player";
   private boolean allowHit = true;
   private boolean allowStay = true;
 

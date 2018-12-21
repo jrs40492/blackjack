@@ -48,8 +48,8 @@ public class BlackJack extends JPanel {
 
 		pen.setFont(new Font("Arial", Font.BOLD, 20));
 
-		game.dealer.hand.drawHand("Dealer", pen);
-		game.player.hand.drawHand("Player", pen);
+		game.dealer.hand.drawHand(game.dealer.type, pen);
+		game.player.hand.drawHand(game.player.type, pen);
 
 		String message = game.checkScores(pen);
 
@@ -71,7 +71,7 @@ public class BlackJack extends JPanel {
 			String Click = buttonClick.getActionCommand();
 
 			if (Click.equals("hit")) {
-				game.player.hand.addCard(deck);
+				game.player.hand.addCard(deck, true);
 			} else if (Click.equals("stay")) {
 				game.dealer.showHand(deck);
 				game.isOver = true;

@@ -1,5 +1,6 @@
 public class Dealer {
   Hand hand = new Hand();
+  String type = "Dealer";
 
   public void showHand(Deck deck) {
     // Set dealers second card to visible
@@ -10,7 +11,7 @@ public class Dealer {
 
     // Dealer has to draw while 16 and under
     while (hand.total <= 16) {
-      hand.addCard(deck);
+      hand.addCard(deck, true);
     }
 
     return;

@@ -21,10 +21,15 @@ public class Deck {
   public void shuffle() {
     // Shuffle cards
     Collections.shuffle(this.cards);
+
+    // Reset place in deck
+    cardIndex = 0;
   }
 
   public Card nextCard() {
     card = this.cards.get(cardIndex);
+
+    // Increase place in deck
     cardIndex += 1;
     return card;
   }

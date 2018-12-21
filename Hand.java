@@ -5,13 +5,9 @@ import java.util.ArrayList;
 public class Hand {
   public ArrayList<Card> cards = new ArrayList<Card>();
   public int total = 0;
+  public int softTotal = 0;
+  public boolean hasAce = false;
   private Card card;
-
-  public void addCard(Deck deck) {
-    card = deck.nextCard();
-    addTotal(card);
-    cards.add(card);
-  }
 
   public void addCard(Deck deck, Boolean visible) {
     card = deck.nextCard();
@@ -25,6 +21,12 @@ public class Hand {
   }
 
   public void addTotal(Card card) {
+    if (card.rank == "A") {
+      this.hasAce = true;
+      this.softTotal++;
+    } else {
+      this.softTotal += card.value;
+    }
     this.total += card.value;
   }
 
@@ -41,17 +43,22 @@ public class Hand {
     int index = 0;
     pen.setColor(Color.white);
 
+    String scoreText = "Total: " + this.total;
+    if (this.hasAce && this.total != 21) {
+      scoreText += " OR " + this.softTotal;
+    }
+
     switch (type) {
     case "Dealer":
       offsetY = yDealer;
-      String dealerText = "Dealer Total: " + this.total;
+      String dealerText = "Dealer " + scoreText;
       pen.drawString(dealerText, xStart, yDealer - 5);
       break;
 
     case "Player":
       offsetX = (cardXSpacing * index) + xStart;
       offsetY = yPlayer;
-      String playerText = "Player Total: " + this.total;
+      String playerText = "Player " + scoreText;
       pen.drawString(playerText, xStart, yPlayer - 5);
       break;
 
@@ -63,18 +70,18 @@ public class Hand {
       offsetX = (cardXSpacing * index) + xStart;
       index++;
 
-      pen.setColor(Color.black);
-      pen.drawRoundRect(offsetX, offsetY, cardWidth, cardHeight, 10, 10);
-
       pen.setColor(Color.WHITE);
       pen.fillRoundRect(offsetX, offsetY, cardWidth, cardHeight, 10, 10);
 
-      pen.setColor(card.color);
+      pen.setColor(Color.black);
+      pen.drawRoundRect(offsetX, offsetY, cardWidth, cardHeight, 10, 10);
 
       // Check if card should show
       if (!card.visible) {
         return;
       }
+
+      pen.setColor(card.color);
 
       int cardCenterWidth = cardWidth / 2;
       int cardCenterHeight = cardHeight / 2;

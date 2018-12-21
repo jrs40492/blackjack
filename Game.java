@@ -12,11 +12,11 @@ public class Game {
 
     deck.shuffle();
 
-    player.hand.addCard(deck);
-    dealer.hand.addCard(deck);
+    this.player.hand.addCard(deck, true);
+    this.dealer.hand.addCard(deck, true);
 
-    player.hand.addCard(deck);
-    dealer.hand.addCard(deck, false);
+    this.player.hand.addCard(deck, true);
+    this.dealer.hand.addCard(deck, false);
   }
 
   public String checkScores(Graphics pen) {
