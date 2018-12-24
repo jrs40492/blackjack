@@ -20,31 +20,56 @@ public class Game {
   }
 
   public String checkScores(Graphics pen) {
-    if (player.hand.total > 21) {
+    int playerTotal = player.hand.total;
+    int playerSoftTotal = player.hand.softTotal;
+
+    int dealerTotal = dealer.hand.total;
+    int dealerSoftTotal = dealer.hand.softTotal;
+
+    // If player doesn't have ace, set soft total to 22 (always busts)
+    if (!player.hand.hasAce) {
+      playerSoftTotal = 22;
+    } else if (playerTotal > 21) {
+      playerTotal = playerSoftTotal;
+    }
+
+    // If dealer doesn't have ace, set soft total to 22 (always busts)
+    if (!dealer.hand.hasAce) {
+      dealerSoftTotal = 22;
+    } else if (dealerTotal > 21) {
+      dealerTotal = dealerSoftTotal;
+    }
+
+    if (playerTotal > 21) {
       return "You busted!!";
     }
 
-    if (player.hand.total == 21) {
+    if (playerTotal == 21) {
       return "BlackJack!!";
     }
 
+    if (dealerTotal == 21) {
+      return "Dealer Blackjack!";
+    }
+
+    // Check if the game is over
     if (!this.isOver) {
       return null;
     }
 
-    if (dealer.hand.total > 21) {
-      return "Dealer Busts";
+    if (dealerTotal > 21) {
+      return "Dealer Busts. You win!";
     }
 
-    if (dealer.hand.total == 21 || dealer.hand.total > player.hand.total) {
+    if (dealerTotal > playerTotal) {
       return "Dealer Wins!!";
     }
 
-    if (dealer.hand.total > 21 || player.hand.total > dealer.hand.total) {
-      return "You win!!";
+    if (playerTotal > dealerTotal) {
+      return "You win!";
     }
 
-    if (player.hand.total == dealer.hand.total) {
+    if (playerTotal == dealerTotal) {
       return "Tie!!";
     }
 

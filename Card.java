@@ -5,6 +5,7 @@ public class Card {
   public String rank;
   public String display;
   public int value;
+  public int softValue = 0;
   public boolean visible;
   public Color color;
 
@@ -41,6 +42,7 @@ public class Card {
     switch (rank) {
     case "A":
       this.value = 11;
+      this.softValue = 1;
       break;
 
     case "2":

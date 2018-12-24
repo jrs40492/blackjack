@@ -90,7 +90,7 @@ public class Hand {
       int rankOffsetY = (offsetY + cardCenterHeight) + 10;
 
       // Draw value
-      pen.drawString(Integer.toString(card.value), rankOffsetX, rankOffsetY);
+      pen.drawString(card.rank, rankOffsetX, rankOffsetY);
 
       int suitOffsetXLeft = offsetX + 10;
       int suitOffsetXRight = offsetX + 125;
